@@ -32,11 +32,15 @@ const App = {
 
         document.querySelectorAll('.form-section').forEach(form => {
             form.classList.add('hidden');
+            form.classList.remove('animate-fade-in');
         });
 
         const form = document.getElementById(`form-${type}`);
         if (form) {
             form.classList.remove('hidden');
+            // Trigger animation
+            void form.offsetWidth;
+            form.classList.add('animate-fade-in');
         }
 
         this.showPlaceholder();
@@ -45,13 +49,13 @@ const App = {
     showPlaceholder() {
         const qrCode = document.getElementById('qrCode');
         qrCode.innerHTML = `
-            <div class="text-center py-8">
-                <div class="w-16 h-16 mx-auto mb-3 rounded-xl bg-gray-200 flex items-center justify-center">
-                    <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="text-center py-10">
+                <div class="w-20 h-20 mx-auto mb-4 rounded-2xl bg-ink-700 flex items-center justify-center">
+                    <svg class="w-10 h-10 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
                     </svg>
                 </div>
-                <p class="text-gray-400 text-sm">Enter content above</p>
+                <p class="text-gray-500 text-sm font-medium">Enter content to generate</p>
             </div>
         `;
     },
@@ -208,27 +212,27 @@ const App = {
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
 
-    // Dark mode toggle
+    // Theme toggle (default is dark, toggle to light)
     const themeToggle = document.getElementById('themeToggle');
     const html = document.documentElement;
     const sunIcon = themeToggle.querySelector('.sun-icon');
     const moonIcon = themeToggle.querySelector('.moon-icon');
 
-    // Check for saved theme preference or default to light
+    // Check for saved theme preference (default to dark)
     const savedTheme = localStorage.getItem('theme');
-    if (savedTheme === 'dark') {
-        html.classList.add('dark');
+    if (savedTheme === 'light') {
+        html.classList.add('light');
         sunIcon.classList.add('hidden');
         moonIcon.classList.remove('hidden');
     }
 
     themeToggle.addEventListener('click', () => {
-        html.classList.toggle('dark');
-        const isDark = html.classList.contains('dark');
+        html.classList.toggle('light');
+        const isLight = html.classList.contains('light');
 
-        sunIcon.classList.toggle('hidden', isDark);
-        moonIcon.classList.toggle('hidden', !isDark);
+        sunIcon.classList.toggle('hidden', isLight);
+        moonIcon.classList.toggle('hidden', !isLight);
 
-        localStorage.setItem('theme', isDark ? 'dark' : 'light');
+        localStorage.setItem('theme', isLight ? 'light' : 'dark');
     });
 });
