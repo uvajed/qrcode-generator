@@ -10,6 +10,14 @@ A single-page QR code generator web application built with vanilla HTML/CSS/Java
 
 No build process required. Open `index.html` directly in a browser to run.
 
+## Deployment
+
+Hosted on Cloudflare Pages at https://qrstudio.e-studios.net
+
+```bash
+wrangler pages deploy . --project-name=qrcode-generator
+```
+
 ## Architecture
 
 **index.html** - Main entry point containing:
